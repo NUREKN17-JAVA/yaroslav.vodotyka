@@ -1,0 +1,9 @@
+Testsuite: nure.cs.vodotyka.usermanagment.UserTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,116 sec
+
+Testcase: testGetAgeWithDaysPrecise took 0,111 sec
+Testcase: testGetFullName took 0 sec
+Testcase: testGetAgeOnCurrentDay took 0 sec
+Testcase: testGetAgeSpecific took 0 sec
+Testcase: testGetAge took 0 sec
+Testcase: testGetAgeWithMonthPrecise took 0 sec
