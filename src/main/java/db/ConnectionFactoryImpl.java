@@ -6,15 +6,26 @@ import java.sql.SQLException;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
 
+	private String url;
+	
+	private String driver;
+	
+	private String user;
+	
+	private String password;
+	
 	public ConnectionFactoryImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ConnectionFactoryImpl(String driver, String url, String user, String password){
+		this.driver = driver;
+		this.url = url;
+		this.user = user;
+		this.password = password;
+	}
+
 	public Connection CreateConnection() throws DatabaseException {
-		String url = "jdbc:hsqldb:file:db/usermanagment";
-		String user = "sa";
-		String password = "";
-		String driver = "org.hsqldb.jdbcDriver";
 		try{
 			Class.forName(driver);
 		}

@@ -14,4 +14,6 @@ public interface UserDao {
 	User GetUser(long userId) throws DatabaseException;
 	
 	Collection GetAll() throws DatabaseException;
+	
+	void SetConnectionFactory(ConnectionFactory connectionFactory);
 }
