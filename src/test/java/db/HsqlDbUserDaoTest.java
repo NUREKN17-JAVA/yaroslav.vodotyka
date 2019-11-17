@@ -8,11 +8,12 @@ import junit.framework.TestCase;
 public class HsqlDbUserDaoTest extends TestCase {
 
 	HsqlDbUserDao dao;
-	
+	ConnectionFactory connectionFactory;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		dao = new HsqlDbUserDao();
+		connectionFactory = new ConnectionFactoryImpl();
+		dao = new HsqlDbUserDao(connectionFactory);
 	}
 
 	public void testCreateUser() {

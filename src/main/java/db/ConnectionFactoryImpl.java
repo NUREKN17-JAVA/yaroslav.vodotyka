@@ -11,7 +11,7 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
 	}
 
 	public Connection CreateConnection() throws DatabaseException {
-		String url = "";
+		String url = "jdbc:hsqldb:file:db/usermanagment";
 		String user = "sa";
 		String password = "";
 		String driver = "org.hsqldb.jdbcDriver";
