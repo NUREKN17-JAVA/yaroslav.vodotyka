@@ -83,7 +83,7 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 	public void testUpdateUser(){
 		User user = CreateTestUserInstance();
 		try {
-			user = dao.CreateUser(user);
+			dao.CreateUser(user);
 			long id = user.getId().longValue();
 			
 			user.setFirstName(CHANGED_FIRST_NAME);

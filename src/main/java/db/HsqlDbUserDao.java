@@ -71,8 +71,26 @@ public class HsqlDbUserDao implements UserDao {
 	}
 
 	public User GetUser(long userId) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Connection dbConnection = connectionFactory.CreateConnection();
+			PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM users AS u WHERE u.id = ?");
+			statement.setLong(1, userId);
+			ResultSet resultSet = statement.executeQuery();
+			if(resultSet.next()){
+				User user = new User();
+				user.setId(new Long(resultSet.getLong(1)));
+				user.setFirstName(resultSet.getString(2));
+				user.setLastName(resultSet.getString(3));
+				user.setDateOfBirth(resultSet.getDate(4));
+				
+				return user;
+			}
+			else{
+				return null;
+			}
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
 	}
 
 	public Collection GetAll() throws DatabaseException {
