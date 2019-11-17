@@ -60,7 +60,7 @@ public class HsqlDbUserDao implements UserDao {
 		}
 	}
 
-	public void UpdateUser(long userId) throws DatabaseException {
+	public void UpdateUser(User user) throws DatabaseException {
 		// TODO Auto-generated method stub
 
 	}

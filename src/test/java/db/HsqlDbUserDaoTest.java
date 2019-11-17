@@ -1,5 +1,6 @@
 package db;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Properties;
@@ -14,6 +15,9 @@ import nure.cs.vodotyka.usermanagment.User;
 
 public class HsqlDbUserDaoTest extends DatabaseTestCase {
 
+	private static final Date CHANGED_DATE = new Date();
+	private static final String CHANGED_LAST_NAME = "changedLastName";
+	private static final String CHANGED_FIRST_NAME = "changedFirstName";
 	HsqlDbUserDao dao;
 	ConnectionFactory connectionFactory;
 	
@@ -28,10 +32,7 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 
 	public void testCreateUser() {
 		try {
-			User user = new User();
-			user.setFirstName("Yaroslav");
-			user.setLastName("Vodotyka");
-			user.setDateOfBirth(new Date());
+			User user = CreateTestUserInstance();
 			assertNull(user.getId());
 			user = dao.CreateUser(user);
 			assertNotNull(user);
@@ -52,6 +53,54 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 		}
 	}
 
+	public void testDeleteUser(){
+		User user = CreateTestUserInstance();
+		try {
+			dao.CreateUser(user);
+			long id = user.getId().longValue();
+			dao.DeleteUser(id);
+			User deletedUser = dao.GetUser(id);
+			assertNull(deletedUser);
+		} catch (DatabaseException e) {
+			fail(e.toString());
+		}
+		
+	}
+	
+	public void testGetUser(){
+		User user = CreateTestUserInstance();
+		try {
+			dao.CreateUser(user);
+			long id = user.getId().longValue();
+			User selectedUser = dao.GetUser(id);
+			assertNotNull(selectedUser);
+			assertEquals(id,  selectedUser.getId().longValue());
+		} catch (DatabaseException e) {
+			fail(e.toString());
+		}
+	}
+	
+	public void testUpdateUser(){
+		User user = CreateTestUserInstance();
+		try {
+			user = dao.CreateUser(user);
+			long id = user.getId().longValue();
+			
+			user.setFirstName(CHANGED_FIRST_NAME);
+			user.setLastName(CHANGED_LAST_NAME);
+			user.setDateOfBirth(CHANGED_DATE);
+			
+			dao.UpdateUser(user);
+			User afterUpdate = dao.GetUser(id);
+			
+			assertEquals(CHANGED_FIRST_NAME, afterUpdate.getFirstName());
+			assertEquals(CHANGED_LAST_NAME, afterUpdate.getLastName());
+			assertEquals(CHANGED_DATE, afterUpdate.getDateOfBirth());
+		} catch (DatabaseException e) {
+			fail(e.toString());
+		}
+	}
+	
 	protected IDatabaseConnection getConnection() throws Exception {
 		Properties prop = new Properties();
 		prop.load(getClass().getClassLoader().getResourceAsStream("HsqlDbTestSettings.properties"));
@@ -68,6 +117,16 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 	protected IDataSet getDataSet() throws Exception {
 		IDataSet dataSet = new XmlDataSet(getClass().getClassLoader().getResourceAsStream("userDataSet.xml"));
 		return dataSet;
+	}
+	
+	private User CreateTestUserInstance(){
+		User user = new User();
+		user.setFirstName("Yaroslav");
+		user.setLastName("Vodotyka");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2000, 5, 21);
+		user.setDateOfBirth(calendar.getTime());
+		return user;
 	}
 
 }
