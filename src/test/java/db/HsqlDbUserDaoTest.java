@@ -1,5 +1,6 @@
 package db;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.dbunit.DatabaseTestCase;
@@ -36,6 +37,16 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 			fail(e.toString());
 		}
 		
+	}
+	
+	public void testGetAll(){
+		try {
+			Collection resultSet = dao.GetAll();
+			assertNotNull("Collection is null" ,resultSet);
+			assertEquals("Collection has an unexpected size" ,2, resultSet.size());
+		} catch (DatabaseException e) {
+			fail(e.toString());
+		}
 	}
 
 	protected IDatabaseConnection getConnection() throws Exception {
