@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import nure.cs.vodotyka.usermanagment.User;
 
@@ -13,6 +15,7 @@ import java.sql.CallableStatement;
 
 public class HsqlDbUserDao implements UserDao {
 
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES(?,?,?)";
 	private ConnectionFactory connectionFactory;
 	
@@ -73,8 +76,24 @@ public class HsqlDbUserDao implements UserDao {
 	}
 
 	public Collection GetAll() throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Collection result = new LinkedList();
+			Connection dbConnection = connectionFactory.CreateConnection();
+			Statement statement = dbConnection.createStatement();
+			ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY);
+			while(resultSet.next()){
+				User user = new User();
+				user.setId(new Long(resultSet.getLong(1)));
+				user.setFirstName(resultSet.getString(2));
+				user.setLastName(resultSet.getString(3));
+				user.setDateOfBirth(resultSet.getDate(4));
+				result.add(user);
+			}
+			
+			return result;
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
 	}
 
 }
