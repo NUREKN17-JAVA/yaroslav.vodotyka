@@ -16,6 +16,10 @@ public class HsqlDbUserDao implements UserDao {
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES(?,?,?)";
 	private ConnectionFactory connectionFactory;
 	
+	public HsqlDbUserDao(){
+		
+	}
+	
 	public HsqlDbUserDao(ConnectionFactory connectionFactoryParam){
 		connectionFactory = connectionFactoryParam;
 	}
