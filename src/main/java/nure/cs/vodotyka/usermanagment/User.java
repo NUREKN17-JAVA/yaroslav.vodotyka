@@ -11,10 +11,10 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = -1823090563357131517L;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getFirstName() {
@@ -36,7 +36,7 @@ public class User implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	private long id;
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private Date dateOfBirth;
