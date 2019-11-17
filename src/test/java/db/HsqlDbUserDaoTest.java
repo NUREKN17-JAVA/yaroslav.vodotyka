@@ -2,6 +2,7 @@ package db;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Properties;
 
 import org.dbunit.DatabaseTestCase;
 import org.dbunit.database.DatabaseConnection;
@@ -10,16 +11,18 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 
 import nure.cs.vodotyka.usermanagment.User;
-import junit.framework.TestCase;
 
 public class HsqlDbUserDaoTest extends DatabaseTestCase {
 
 	HsqlDbUserDao dao;
 	ConnectionFactory connectionFactory;
 	
+	public HsqlDbUserDaoTest(){
+		
+	}
+	
 	protected void setUp() throws Exception {
 		super.setUp();
-		
 		dao = new HsqlDbUserDao(connectionFactory);
 	}
 
@@ -50,7 +53,15 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 	}
 
 	protected IDatabaseConnection getConnection() throws Exception {
-		connectionFactory = new ConnectionFactoryImpl();
+		Properties prop = new Properties();
+		prop.load(getClass().getClassLoader().getResourceAsStream("HsqlDbTestSettings.properties"));
+		
+		String user = prop.getProperty("connection.user");
+		String url = prop.getProperty("connection.url");
+		String driver = prop.getProperty("connection.driver");
+		String password = prop.getProperty("connection.password");
+		
+		connectionFactory = new ConnectionFactoryImpl(driver,url, user, password);
 		return new DatabaseConnection(connectionFactory.CreateConnection());
 	}
 

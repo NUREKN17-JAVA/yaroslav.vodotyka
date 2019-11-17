@@ -96,4 +96,9 @@ public class HsqlDbUserDao implements UserDao {
 		}
 	}
 
+	public void SetConnectionFactory(ConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
+		
+	}
+
 }
