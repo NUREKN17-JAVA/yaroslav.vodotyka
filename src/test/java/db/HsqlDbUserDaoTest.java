@@ -2,17 +2,23 @@ package db;
 
 import java.util.Date;
 
+import org.dbunit.DatabaseTestCase;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.XmlDataSet;
+
 import nure.cs.vodotyka.usermanagment.User;
 import junit.framework.TestCase;
 
-public class HsqlDbUserDaoTest extends TestCase {
+public class HsqlDbUserDaoTest extends DatabaseTestCase {
 
 	HsqlDbUserDao dao;
 	ConnectionFactory connectionFactory;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		connectionFactory = new ConnectionFactoryImpl();
+		
 		dao = new HsqlDbUserDao(connectionFactory);
 	}
 
@@ -30,6 +36,16 @@ public class HsqlDbUserDaoTest extends TestCase {
 			fail(e.toString());
 		}
 		
+	}
+
+	protected IDatabaseConnection getConnection() throws Exception {
+		connectionFactory = new ConnectionFactoryImpl();
+		return new DatabaseConnection(connectionFactory.CreateConnection());
+	}
+
+	protected IDataSet getDataSet() throws Exception {
+		IDataSet dataSet = new XmlDataSet(getClass().getClassLoader().getResourceAsStream("userDataSet.xml"));
+		return dataSet;
 	}
 
 }
