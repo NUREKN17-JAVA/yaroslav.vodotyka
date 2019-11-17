@@ -73,6 +73,7 @@ public class HsqlDbUserDaoTest extends DatabaseTestCase {
 			dao.CreateUser(user);
 			long id = user.getId().longValue();
 			User selectedUser = dao.GetUser(id);
+			assertNull(dao.GetUser(id + 1));
 			assertNotNull(selectedUser);
 			assertEquals(id,  selectedUser.getId().longValue());
 		} catch (DatabaseException e) {
