@@ -61,7 +61,22 @@ public class HsqlDbUserDao implements UserDao {
 	}
 
 	public void UpdateUser(User user) throws DatabaseException {
-		// TODO Auto-generated method stub
+		try {
+			Connection dbConnection = connectionFactory.CreateConnection();
+			PreparedStatement statement = dbConnection.prepareStatement("UPDATE users AS u SET firstname=?, lastname=?, dateofbirth=? WHERE u.id=?");
+			statement.setString(1, user.getFirstName());
+			statement.setString(2, user.getLastName());
+			statement.setDate(3, new Date(user.getDateOfBirth().getTime()));
+			statement.setLong(4, user.getId().longValue());
+			int rowsUpdated = statement.executeUpdate();
+			if(rowsUpdated != 1){
+				throw new DatabaseException("Rows updated count was -" + rowsUpdated);
+			}
+			statement.close();
+			dbConnection.close();
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
 
 	}
 
