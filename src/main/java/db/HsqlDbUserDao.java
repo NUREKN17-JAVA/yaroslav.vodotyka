@@ -81,8 +81,19 @@ public class HsqlDbUserDao implements UserDao {
 	}
 
 	public void DeleteUser(long userId) throws DatabaseException {
-		// TODO Auto-generated method stub
-
+		try {
+			Connection dbConnection = connectionFactory.CreateConnection();
+			PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM users AS u WHERE u.id=?");
+			statement.setLong(1, userId);
+			int rowsDeleted = statement.executeUpdate();
+			if(rowsDeleted != 1){
+				throw new DatabaseException("Deleted rows count is - " + rowsDeleted);
+			}
+			statement.close();
+			dbConnection.close();
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
 	}
 
 	public User GetUser(long userId) throws DatabaseException {
