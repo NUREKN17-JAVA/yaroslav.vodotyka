@@ -138,6 +138,10 @@ public class HsqlDbUserDao implements UserDao {
 				result.add(user);
 			}
 			
+			resultSet.close();
+			statement.close();
+			dbConnection.close();
+			
 			return result;
 		} catch (SQLException e) {
 			throw new DatabaseException(e);
