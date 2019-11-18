@@ -15,6 +15,9 @@ import java.sql.CallableStatement;
 
 public class HsqlDbUserDao implements UserDao {
 
+	private static final String SELECT_ONE_QUERY = "SELECT * FROM users AS u WHERE u.id = ?";
+	private static final String DELETE_QUERY = "DELETE FROM users AS u WHERE u.id=?";
+	private static final String UPDATE_QUERY = "UPDATE users AS u SET firstname=?, lastname=?, dateofbirth=? WHERE u.id=?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES(?,?,?)";
 	private ConnectionFactory connectionFactory;
@@ -63,7 +66,7 @@ public class HsqlDbUserDao implements UserDao {
 	public void UpdateUser(User user) throws DatabaseException {
 		try {
 			Connection dbConnection = connectionFactory.CreateConnection();
-			PreparedStatement statement = dbConnection.prepareStatement("UPDATE users AS u SET firstname=?, lastname=?, dateofbirth=? WHERE u.id=?");
+			PreparedStatement statement = dbConnection.prepareStatement(UPDATE_QUERY);
 			statement.setString(1, user.getFirstName());
 			statement.setString(2, user.getLastName());
 			statement.setDate(3, new Date(user.getDateOfBirth().getTime()));
@@ -83,7 +86,7 @@ public class HsqlDbUserDao implements UserDao {
 	public void DeleteUser(long userId) throws DatabaseException {
 		try {
 			Connection dbConnection = connectionFactory.CreateConnection();
-			PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM users AS u WHERE u.id=?");
+			PreparedStatement statement = dbConnection.prepareStatement(DELETE_QUERY);
 			statement.setLong(1, userId);
 			int rowsDeleted = statement.executeUpdate();
 			if(rowsDeleted != 1){
@@ -99,7 +102,7 @@ public class HsqlDbUserDao implements UserDao {
 	public User GetUser(long userId) throws DatabaseException {
 		try {
 			Connection dbConnection = connectionFactory.CreateConnection();
-			PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM users AS u WHERE u.id = ?");
+			PreparedStatement statement = dbConnection.prepareStatement(SELECT_ONE_QUERY);
 			statement.setLong(1, userId);
 			ResultSet resultSet = statement.executeQuery();
 			User user = null;
