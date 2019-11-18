@@ -76,18 +76,19 @@ public class HsqlDbUserDao implements UserDao {
 			PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM users AS u WHERE u.id = ?");
 			statement.setLong(1, userId);
 			ResultSet resultSet = statement.executeQuery();
+			User user = null;
 			if(resultSet.next()){
-				User user = new User();
+				user = new User();
 				user.setId(new Long(resultSet.getLong(1)));
 				user.setFirstName(resultSet.getString(2));
 				user.setLastName(resultSet.getString(3));
 				user.setDateOfBirth(resultSet.getDate(4));
 				
-				return user;
 			}
-			else{
-				return null;
-			}
+			resultSet.close();
+			statement.close();
+			dbConnection.close();
+			return user;
 		} catch (SQLException e) {
 			throw new DatabaseException(e);
 		}
