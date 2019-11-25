@@ -51,6 +51,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			detailButton = new JButton();
 			detailButton.setText("Details");
 			detailButton.setName("detailButton");
+			detailButton.setActionCommand("details");
 			detailButton.addActionListener(this);
 		}
 		return detailButton;
@@ -61,6 +62,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			deleteButton = new JButton();
 			deleteButton.setText("Delete");
 			deleteButton.setName("deleteButton");
+			deleteButton.setActionCommand("delete");
 			deleteButton.addActionListener(this);
 		}
 		return deleteButton;
@@ -71,6 +73,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			editButton = new JButton();
 			editButton.setText("Edit");
 			editButton.setName("editButton");
+			editButton.setActionCommand("edit");
 			editButton.addActionListener(this);
 		}
 		return editButton;
@@ -81,6 +84,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			addButton = new JButton();
 			addButton.setText("Add");
 			addButton.setName("addButton");
+			addButton.setActionCommand("add");
 			addButton.addActionListener(this);
 		}
 		return addButton;
@@ -103,7 +107,11 @@ public class BrowsePanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		String actionCommand = e.getActionCommand();
+		if(actionCommand.equalsIgnoreCase("add")){
+			this.setVisible(false);
+			parent.ShowAddPanel();
+		}
 		
 	}
 
