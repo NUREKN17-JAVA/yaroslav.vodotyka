@@ -1,5 +1,7 @@
 package desktop;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -13,7 +15,7 @@ public class UserTableModel extends AbstractTableModel {
 	private List users = null;
 	
 	public UserTableModel(Collection users){
-		this.users = users;
+		this.users = new ArrayList(users);
 	}
 	@Override
 	public int getRowCount() {
@@ -25,11 +27,11 @@ public class UserTableModel extends AbstractTableModel {
 		return COLUMN_NAMES.length;
 	}
 
-	public Class GetColumnClass(int columnIndex){
+	public Class getColumnClass(int columnIndex){
 		return COLUMN_CLASSES[columnIndex];
 	}
 	
-	public String GetColumnName(int columnIndex){
+	public String getColumnName(int columnIndex){
 		return COLUMN_NAMES[columnIndex];
 	}
 	
