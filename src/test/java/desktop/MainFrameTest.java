@@ -5,9 +5,11 @@ import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
+import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 
 public class MainFrameTest extends JFCTestCase {
@@ -35,6 +37,19 @@ public class MainFrameTest extends JFCTestCase {
 		Find(JButton.class, "addButton");
 		Find(JButton.class, "deleteButton");
 		Find(JButton.class, "detailButton");
+	}
+	
+	public void testAddUser(){
+		JButton addButton = (JButton)Find(JButton.class, "addButton");
+		getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
+		
+		Find(JPanel.class, "addPanel");
+		
+		Find(JTextField.class, "firstNameField");
+		Find(JTextField.class, "lastNameField");
+		Find(JTextField.class, "birthDateNameField");
+		Find(JButton.class, "okButton");
+		Find(JButton.class, "cancelButton");
 	}
 	
 	private Component Find(Class compClass, String name){
