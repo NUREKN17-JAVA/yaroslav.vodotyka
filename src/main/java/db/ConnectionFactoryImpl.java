@@ -3,6 +3,7 @@ package db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
 
@@ -25,6 +26,13 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
 		this.password = password;
 	}
 
+	public ConnectionFactoryImpl(Properties prop){
+		this.user = prop.getProperty("connection.user");
+		this.url = prop.getProperty("connection.url");
+		this.driver = prop.getProperty("connection.driver");
+		this.password = prop.getProperty("connection.password");
+	}
+	
 	public Connection CreateConnection() throws DatabaseException {
 		try{
 			Class.forName(driver);

@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class DaoFactoryTest extends TestCase {
 
-	DaoFactory factory = DaoFactory.GetInstance();
+	
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -12,6 +12,7 @@ public class DaoFactoryTest extends TestCase {
 
 	public void testGetUserDao() {
 		try {
+			DaoFactory factory = DaoFactory.GetInstance();
 			assertNotNull("Factory instance is null" ,factory);
 			UserDao userDao = factory.GetUserDao();
 			assertNotNull("Factory returned null" ,userDao);
