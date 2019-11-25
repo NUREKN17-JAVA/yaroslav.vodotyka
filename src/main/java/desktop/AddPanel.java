@@ -91,11 +91,11 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	private JButton GetCancelButton() {
 		if(cancelButton == null){
-			okButton = new JButton();
-			okButton.setText("Cancel");
-			okButton.setName("cancelButton");
-			okButton.setActionCommand("cancel");
-			okButton.addActionListener(this);
+			cancelButton = new JButton();
+			cancelButton.setText("Cancel");
+			cancelButton.setName("cancelButton");
+			cancelButton.setActionCommand("cancel");
+			cancelButton.addActionListener(this);
 		}
 		return cancelButton;
 	}
