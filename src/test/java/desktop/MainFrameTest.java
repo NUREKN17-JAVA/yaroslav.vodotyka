@@ -1,6 +1,8 @@
 package desktop;
 
 import java.awt.Component;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -10,6 +12,7 @@ import javax.swing.JTextField;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
+import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 
 public class MainFrameTest extends JFCTestCase {
@@ -45,16 +48,31 @@ public class MainFrameTest extends JFCTestCase {
 	}
 	
 	public void testAddUser(){
+		JTable table = (JTable)Find(JTable.class, "userTable");
+		assertEquals(0, table.getRowCount());
+		
 		JButton addButton = (JButton)Find(JButton.class, "addButton");
 		getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
 		
 		Find(JPanel.class, "addPanel");
 		
-		Find(JTextField.class, "firstNameField");
-		Find(JTextField.class, "lastNameField");
-		Find(JTextField.class, "birthDateField");
-		Find(JButton.class, "okButton");
+		JTextField firstNameField = (JTextField)Find(JTextField.class, "firstNameField");
+		JTextField lastNameField = (JTextField)Find(JTextField.class, "lastNameField");
+		JTextField birthDateField = (JTextField)Find(JTextField.class, "birthDateField");
+		JButton okButton = (JButton)Find(JButton.class, "okButton");
 		Find(JButton.class, "cancelButton");
+		
+		DateFormat formatter = DateFormat.getDateInstance();
+		String date = formatter.format(new Date());
+		getHelper().sendString(new StringEventData(this, firstNameField, "Yaroslav"));
+		getHelper().sendString(new StringEventData(this, lastNameField, "Vodotyka"));
+		getHelper().sendString(new StringEventData(this, birthDateField, date));
+		
+		getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
+		
+		Find(JPanel.class, "browsePanel");
+		table = (JTable)Find(JTable.class, "userTable");
+		assertEquals(1, table.getRowCount());
 	}
 	
 	private Component Find(Class compClass, String name){
