@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import util.Messages;
+
 public class MainFrame extends JFrame {
 
 	private static final int FRAME_HEIGHT = 600;
@@ -27,7 +29,7 @@ public class MainFrame extends JFrame {
 	private void initialize(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		this.setTitle("User managment");
+		this.setTitle(Messages.getString("MainFrame.user_managment")); //$NON-NLS-1$
 		this.setContentPane(GetContentPanel());
 	}
 	
