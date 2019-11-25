@@ -60,6 +60,10 @@ public class MainFrame extends JFrame {
 	public void ShowAddPanel() {
 		showPanel(GetAddPanel());
 	}
+	
+	public void ShowBrowsePanel(){
+		showPanel(GetBrowsePanel());
+	}
 
 	private void showPanel(JPanel panel) {
 		getContentPane().add(panel, BorderLayout.CENTER);
