@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setTitle("User managment");
-		this.setContentPane(getContentPane());
+		this.setContentPane(GetContentPanel());
 	}
 	
 	private JPanel GetContentPanel(){
