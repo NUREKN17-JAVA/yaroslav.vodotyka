@@ -64,6 +64,27 @@ public class User implements Serializable {
 		return difference.getYears();
 	}
 	
+	@Override
+	public boolean equals(Object obj){
+		if(obj == null){
+			return false;
+		}
+		if(this == obj){
+			return true;
+		}
+		if(this.getId() == null && ((User)obj).getId() == null){
+			return true;
+		}
+		return this.getId().equals(((User)obj).getId());
+	}
+	
+	@Override
+	public int hashCode(){
+		if(this.getId() == null){
+			return 0;
+		}
+		return this.getId().hashCode();
+	}
 	//Ctors
 	public User(){
 		
