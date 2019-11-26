@@ -1,16 +1,22 @@
 package desktop;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import db.DatabaseException;
+import nure.cs.vodotyka.usermanagment.User;
 import util.Messages;
 
 public class AddPanel extends JPanel implements ActionListener {
@@ -113,8 +119,31 @@ public class AddPanel extends JPanel implements ActionListener {
 		return okButton;
 	}
 
+	private void ClearFields(){
+		GetBirthDateField().setText("");
+		GetFirstNameField().setText("");
+		GetLastNameField().setText("");
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equalsIgnoreCase("ok")){
+			User user = new User();
+			user.setFirstName(GetFirstNameField().getText());
+			user.setLastName(GetLastNameField().getText());
+			DateFormat formatter = DateFormat.getDateInstance();
+			try {
+				user.setDateOfBirth(formatter.parse(GetBirthDateField().getText()));
+			} catch (ParseException ex) {
+				GetBirthDateField().setBackground(Color.red);
+				return;
+			}
+			try {
+				parent.GetDao().CreateUser(user);
+			} catch (DatabaseException e1) {
+				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 		this.setVisible(false);
 		parent.ShowBrowsePanel();
 	}

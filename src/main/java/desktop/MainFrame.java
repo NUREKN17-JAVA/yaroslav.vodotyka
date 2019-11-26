@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import db.DaoFactory;
+import db.UserDao;
 import util.Messages;
 
 public class MainFrame extends JFrame {
@@ -14,9 +16,11 @@ public class MainFrame extends JFrame {
 	private JPanel contentPanel;
 	private JPanel browsePanel;
 	private JPanel addPanel;
+	private UserDao dao;
 	
 	public MainFrame(){
 		super();
+		SetDao(DaoFactory.GetInstance().GetUserDao());
 		initialize();
 	}
 	
@@ -46,6 +50,7 @@ public class MainFrame extends JFrame {
 		if(browsePanel == null){
 			browsePanel = new BrowsePanel(this);
 		}
+		((BrowsePanel)browsePanel).InitTable();
 		return browsePanel;
 	}
 	
@@ -69,5 +74,13 @@ public class MainFrame extends JFrame {
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setVisible(true);
 		panel.repaint();
+	}
+
+	public UserDao GetDao() {
+		return dao;
+	}
+
+	public void SetDao(UserDao dao) {
+		this.dao = dao;
 	}
 }
