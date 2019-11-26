@@ -3,12 +3,16 @@ package desktop;
 import java.awt.Component;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import db.DaoFactory;
+import db.DaoFactoryImpl;
+import db.MockUserDao;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -21,6 +25,11 @@ public class MainFrameTest extends JFCTestCase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
+		Properties properties = new Properties();
+		properties.setProperty("db.UserDao", MockUserDao.class.getName());
+		properties.setProperty("dao.factory", DaoFactoryImpl.class.getName());
+		DaoFactory.GetInstance().init(properties);
+		
 		setHelper(new JFCTestHelper());
 		mainFrame = new MainFrame();
 		mainFrame.setVisible(true);
