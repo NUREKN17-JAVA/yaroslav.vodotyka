@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
 	private JPanel browsePanel;
 	private JPanel addPanel;
 	private JPanel editPanel;
+	private JPanel detailsPanel;
 	
 	private UserDao dao;
 	
@@ -73,12 +74,26 @@ public class MainFrame extends JFrame {
 		return editPanel;
 	}
 	
+	private JPanel GetDetailsPanel(User user){
+		if(detailsPanel == null){
+			detailsPanel = new DetailsPanel(this, user);
+		}
+		else{
+			((DetailsPanel)detailsPanel).SetUser(user);
+		}
+		return detailsPanel;
+	}
+	
 	public void ShowAddPanel() {
 		showPanel(GetAddPanel());
 	}
 	
 	public void ShowEditPanel(User user){
 		showPanel(GetEditPanel(user));
+	}
+	
+	public void ShowDetailsPanel(User user){
+		showPanel(GetDetailsPanel(user));
 	}
 	
 	public void ShowBrowsePanel(){

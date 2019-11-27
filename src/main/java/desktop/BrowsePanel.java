@@ -147,6 +147,24 @@ public class BrowsePanel extends JPanel implements ActionListener {
 				parent.ShowEditPanel(user);
 			}
 		}
+		if(actionCommand.equalsIgnoreCase("details")){
+			int[] selectedRows = GetUserTable().getSelectedRows();
+			if(selectedRows.length != 1){
+				JOptionPane.showMessageDialog(this, "Select ONE user to see information.", "Alert", JOptionPane.WARNING_MESSAGE);
+				return;
+			}else{
+				int rowIndex = selectedRows[0];
+				Long userId = (Long)GetUserTable().getValueAt(rowIndex, 0);
+				User user = null;
+				try{
+					user = parent.GetDao().GetUser(userId.longValue());
+				}catch(DatabaseException ex){
+					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				this.setVisible(false);
+				parent.ShowDetailsPanel(user);
+			}
+		}
 	}
 
 }
