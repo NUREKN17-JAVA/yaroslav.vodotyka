@@ -16,6 +16,7 @@ public class MainFrame extends JFrame {
 	private JPanel contentPanel;
 	private JPanel browsePanel;
 	private JPanel addPanel;
+	
 	private UserDao dao;
 	
 	public MainFrame(){
