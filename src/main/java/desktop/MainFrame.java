@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import nure.cs.vodotyka.usermanagment.User;
 import db.DaoFactory;
 import db.UserDao;
 import util.Messages;
@@ -16,6 +17,7 @@ public class MainFrame extends JFrame {
 	private JPanel contentPanel;
 	private JPanel browsePanel;
 	private JPanel addPanel;
+	private JPanel editPanel;
 	
 	private UserDao dao;
 	
@@ -63,8 +65,20 @@ public class MainFrame extends JFrame {
 		return addPanel;
 	}
 
+	private JPanel GetEditPanel(User user){
+		if(editPanel == null){
+			editPanel = new EditPanel(this, user);
+		}
+		((EditPanel)editPanel).SetUser(user);
+		return editPanel;
+	}
+	
 	public void ShowAddPanel() {
 		showPanel(GetAddPanel());
+	}
+	
+	public void ShowEditPanel(User user){
+		showPanel(GetEditPanel(user));
 	}
 	
 	public void ShowBrowsePanel(){

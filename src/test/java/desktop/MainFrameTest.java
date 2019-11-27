@@ -141,6 +141,7 @@ public class MainFrameTest extends JFCTestCase {
 		expectedUser.setDateOfBirth(new Date());
 		
 		mockUserDao.expect("UpdateUser", expectedUser);
+		mockUserDao.expectAndReturn("GetAll", users);
 		
 		JTable table = (JTable)Find(JTable.class, "userTable");
 		assertEquals(1, table.getRowCount());
@@ -154,7 +155,6 @@ public class MainFrameTest extends JFCTestCase {
 		
 		JTextField firstNameField = (JTextField)Find(JTextField.class, "firstNameField");
 		JTextField lastNameField = (JTextField)Find(JTextField.class, "lastNameField");
-		JTextField birthDateField = (JTextField)Find(JTextField.class, "birthDateField");
 		
 		getHelper().sendString(new StringEventData(this, firstNameField, "newFirst"));
 		getHelper().sendString(new StringEventData(this, lastNameField, "newLast"));

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import nure.cs.vodotyka.usermanagment.User;
 import db.DatabaseException;
 import util.Messages;
 
@@ -128,7 +129,24 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			this.setVisible(false);
 			parent.ShowAddPanel();
 		}
-		
+		if(actionCommand.equalsIgnoreCase("edit")){
+			int[] selectedRows = GetUserTable().getSelectedRows();
+			if(selectedRows.length != 1){
+				JOptionPane.showMessageDialog(this, "Select ONE user to edit.", "Alert", JOptionPane.WARNING_MESSAGE);
+				return;
+			}else{
+				int rowIndex = selectedRows[0];
+				Long userId = (Long)GetUserTable().getValueAt(rowIndex, 0);
+				User user = null;
+				try {
+					user = parent.GetDao().GetUser(userId.longValue());
+				} catch (DatabaseException e1) {
+					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				this.setVisible(false);
+				parent.ShowEditPanel(user);
+			}
+		}
 	}
 
 }
