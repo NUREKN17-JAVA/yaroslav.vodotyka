@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -166,6 +167,41 @@ public class MainFrameTest extends JFCTestCase {
 		
 		Find(JPanel.class, "browsePanel");
 		
+		table = (JTable)Find(JTable.class, "userTable");
+		assertEquals(1, table.getRowCount());
+	}
+	
+	public void testDetailsUser(){
+		User expectedUser = new User();
+		expectedUser.setId(new Long(1));
+		expectedUser.setFirstName("Yaroslav");
+		expectedUser.setLastName("Vodotyka");
+		expectedUser.setDateOfBirth(new Date());
+		
+		mockUserDao.expectAndReturn("GetUser", expectedUser.getId().longValue(), expectedUser);
+		ArrayList users = new ArrayList(this.users);
+		mockUserDao.expectAndReturn("GetAll", users);
+		
+		JTable table = (JTable)Find(JTable.class, "userTable");
+		assertEquals(1, table.getRowCount());
+		
+		
+		JButton detailsButton = (JButton)Find(JButton.class, "detailButton");
+		getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
+		getHelper().enterClickAndLeave(new MouseEventData(this, detailsButton));
+		
+		Find(JPanel.class, "detailsPanel");
+		
+		Find(JLabel.class, "idLabel");
+		Find(JLabel.class, "firstNameLabel");
+		Find(JLabel.class, "lastNameLabel");
+		Find(JLabel.class, "birthDateLabel");
+		Find(JLabel.class, "ageLabel");
+		
+		JButton cancelButton = (JButton)Find(JButton.class, "cancelButton");
+		getHelper().enterClickAndLeave(new MouseEventData(this, cancelButton));
+		
+		Find(JPanel.class, "browsePanel");
 		table = (JTable)Find(JTable.class, "userTable");
 		assertEquals(1, table.getRowCount());
 	}
