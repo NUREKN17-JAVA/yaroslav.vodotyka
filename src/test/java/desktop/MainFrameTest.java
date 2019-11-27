@@ -206,6 +206,29 @@ public class MainFrameTest extends JFCTestCase {
 		assertEquals(1, table.getRowCount());
 	}
 	
+	public void testDeleteUser(){
+		User expectedUser = new User();
+		expectedUser.setId(new Long(1));
+		expectedUser.setFirstName("Yaroslav");
+		expectedUser.setLastName("Vodotyka");
+		expectedUser.setDateOfBirth(new Date());
+		
+		ArrayList users = new ArrayList(this.users);
+		mockUserDao.expectAndReturn("GetAll", users);
+		mockUserDao.expect("DeleteUser", expectedUser.getId());
+		
+		JTable table = (JTable)Find(JTable.class, "userTable");
+		assertEquals(1, table.getRowCount());
+		
+		JButton deleteButton = (JButton)Find(JButton.class, "deleteButton");
+		getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
+		getHelper().enterClickAndLeave(new MouseEventData(this, deleteButton));
+		
+		Find(JPanel.class, "browsePanel");
+		table = (JTable)Find(JTable.class, "userTable");
+		assertEquals(0, table.getRowCount());
+	}
+	
 	private Component Find(Class compClass, String name){
 		NamedComponentFinder finder = new NamedComponentFinder(compClass, name);
 		finder.setWait(0);
