@@ -140,7 +140,9 @@ public class MainFrameTest extends JFCTestCase {
 		expectedUser.setLastName("Vodotyka");
 		expectedUser.setDateOfBirth(new Date());
 		
+		mockUserDao.expectAndReturn("GetUser", expectedUser.getId(), expectedUser);
 		mockUserDao.expect("UpdateUser", expectedUser);
+		ArrayList users = new ArrayList(this.users);
 		mockUserDao.expectAndReturn("GetAll", users);
 		
 		JTable table = (JTable)Find(JTable.class, "userTable");
