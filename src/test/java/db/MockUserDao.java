@@ -15,7 +15,7 @@ public class MockUserDao implements UserDao {
 	public User CreateUser(User user) throws DatabaseException {
 		Long currId = new Long(++id);
 		user.setId(currId);
-		users.put(currId, user);
+		users.put(currId.longValue(), user);
 		return user;
 	}
 
@@ -23,19 +23,19 @@ public class MockUserDao implements UserDao {
 	public void UpdateUser(User user) throws DatabaseException {
 		Long currId = user.getId();
 		users.remove(currId);
-		users.put(currId, user);
+		users.put(currId.longValue(), user);
 	}
 
 	@Override
 	public void DeleteUser(long userId) throws DatabaseException {
 		Long currId = new Long(userId);
-		users.remove(currId);
+		users.remove(currId.longValue());
 	}
 
 	@Override
 	public User GetUser(long userId) throws DatabaseException {
 		Long currId = new Long(userId);
-		return (User)users.get(currId);
+		return (User)users.get(currId.longValue());
 	}
 
 	@Override

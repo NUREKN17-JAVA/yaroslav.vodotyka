@@ -165,6 +165,23 @@ public class BrowsePanel extends JPanel implements ActionListener {
 				parent.ShowDetailsPanel(user);
 			}
 		}
+		if(actionCommand.equalsIgnoreCase("delete")){
+			int[] selectedRows = GetUserTable().getSelectedRows();
+			if(selectedRows.length != 1){
+				JOptionPane.showMessageDialog(this, "Select ONE user to delete.", "Alert", JOptionPane.WARNING_MESSAGE);
+				return;
+			}else{
+				int rowIndex = selectedRows[0];
+				Long userId = (Long)GetUserTable().getValueAt(rowIndex, 0);
+				try{
+					parent.GetDao().DeleteUser(userId.longValue());
+					InitTable();
+					this.repaint();
+				}catch(DatabaseException ex){
+					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 	}
 
 }

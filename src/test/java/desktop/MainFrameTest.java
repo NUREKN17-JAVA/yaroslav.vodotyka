@@ -213,8 +213,8 @@ public class MainFrameTest extends JFCTestCase {
 		expectedUser.setLastName("Vodotyka");
 		expectedUser.setDateOfBirth(new Date());
 		
-		ArrayList users = new ArrayList(this.users);
-		mockUserDao.expectAndReturn("GetAll", users);
+		ArrayList expectedUsers = new ArrayList();
+		mockUserDao.expectAndReturn("GetAll", expectedUsers);
 		mockUserDao.expect("DeleteUser", expectedUser.getId());
 		
 		JTable table = (JTable)Find(JTable.class, "userTable");
@@ -223,6 +223,7 @@ public class MainFrameTest extends JFCTestCase {
 		JButton deleteButton = (JButton)Find(JButton.class, "deleteButton");
 		getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
 		getHelper().enterClickAndLeave(new MouseEventData(this, deleteButton));
+		
 		
 		Find(JPanel.class, "browsePanel");
 		table = (JTable)Find(JTable.class, "userTable");
