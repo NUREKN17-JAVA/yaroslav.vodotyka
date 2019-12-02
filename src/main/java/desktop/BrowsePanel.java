@@ -174,7 +174,6 @@ public class BrowsePanel extends JPanel implements ActionListener {
 				int rowIndex = selectedRows[0];
 				Long userId = (Long)GetUserTable().getValueAt(rowIndex, 0);
 				try{
-					JOptionPane.
 					parent.GetDao().DeleteUser(userId.longValue());
 					InitTable();
 					this.repaint();
