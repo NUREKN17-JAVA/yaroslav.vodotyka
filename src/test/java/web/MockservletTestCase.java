@@ -9,7 +9,7 @@ import db.DaoFactory;
 import db.MockDaoFactory;
 import db.MockUserDao;
 
-public class MockServletTestCase extends BasicServletTestCaseAdapter {
+public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 
 	private Mock mockUserDao;
 	
@@ -17,7 +17,7 @@ public class MockServletTestCase extends BasicServletTestCaseAdapter {
 		Properties prop = new Properties();
 		prop.setProperty("dao.factory", MockDaoFactory.class.getName());
 		DaoFactory.init(prop);
-		setMockUserDao((MockDaoFatory)DaoFactory.GetInstance()).GetUserDao());
+		setMockUserDao(((MockDaoFactory)DaoFactory.GetInstance()).GetMockUserDao());
 		super.setUp();
 	}
 
@@ -30,6 +30,7 @@ public class MockServletTestCase extends BasicServletTestCaseAdapter {
 	}
 
 	protected void tearDown() throws Exception {
+		getMockUserDao().verify();
 		super.tearDown();
 	}
 
