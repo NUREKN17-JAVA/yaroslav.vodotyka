@@ -3,6 +3,7 @@
 	<head><title>User managment</title></head>
 </html>
 <body>
+	<form action="<%=request.getContextPath() %>/browse>" method="post">
 	<table>
 		<tr>
 			<th>Id</th>
@@ -19,4 +20,9 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<input type="submit" name="addButton" value="Add"/>
+	<input type="submit" name="editButton" value="Edit"/>
+	<input type="submit" name="deleteButton" value="Delete"/>
+	<input type="submit" name="detailsButton" value="Details"/>
+	</form>
 </body>
