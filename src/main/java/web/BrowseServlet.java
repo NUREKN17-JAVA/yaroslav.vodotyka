@@ -16,7 +16,38 @@ public class BrowseServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		if(req.getParameter("addButton") != null){
+			Add(req, resp);
+		}
+		else if(req.getParameter("editButton") != null){
+			Edit(req, resp);
+		}
+		else if(req.getParameter("deleteButton") != null){
+			Delete(req, resp);
+		}
+		else if(req.getParameter("detailsButton") != null){
+			Details(req, resp);
+		}
 		Browse(req, resp);
+	}
+
+	private void Details(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void Delete(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void Edit(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void Add(HttpServletRequest req, HttpServletResponse resp) {
+		
 	}
 
 	private void Browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException{
