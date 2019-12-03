@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nure.cs.vodotyka.usermanagment.User;
 import db.DaoFactory;
 import db.DatabaseException;
 
@@ -27,8 +28,10 @@ public class BrowseServlet extends HttpServlet {
 		}
 		else if(req.getParameter("detailsButton") != null){
 			Details(req, resp);
+		}else{
+			Browse(req, resp);
 		}
-		Browse(req, resp);
+		
 	}
 
 	private void Details(HttpServletRequest req, HttpServletResponse resp) {
@@ -41,9 +44,26 @@ public class BrowseServlet extends HttpServlet {
 		
 	}
 
-	private void Edit(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		
+	private void Edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String idStr = req.getParameter("id");
+		if(idStr == null || idStr.trim().length() == 0){
+			req.setAttribute("error", "You must select a user");
+		} else{
+			try {
+				req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+			} catch (ServletException | IOException e) {
+				req.setAttribute("error", "Error" + e.toString());
+			}
+			try{
+				User user = DaoFactory.GetInstance().GetUserDao().GetUser(new Long(idStr));
+				req.getSession().setAttribute("user", user);
+			} catch(DatabaseException ex){
+				req.setAttribute("error", "Error" + ex.toString());
+				req.getRequestDispatcher("/browse.jsp").forward(req,  resp);
+				return;
+			}
+			req.getRequestDispatcher("/edit").forward(req,  resp);
+		}
 	}
 
 	private void Add(HttpServletRequest req, HttpServletResponse resp) {
