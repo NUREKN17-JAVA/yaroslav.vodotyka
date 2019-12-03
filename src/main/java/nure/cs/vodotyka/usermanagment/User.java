@@ -89,4 +89,11 @@ public class User implements Serializable {
 	public User(){
 		
 	}
+	
+	public User(Long id, String firstName, String lastName, Date birthDate){
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = birthDate;
+	}
 }
