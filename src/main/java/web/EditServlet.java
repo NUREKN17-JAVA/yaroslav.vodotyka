@@ -22,24 +22,29 @@ public class EditServlet extends HttpServlet {
 		if(req.getParameter("okButton") != null){
 			doOk(req, resp);
 		} else if(req.getParameter("cancelButton") != null){
-			doCancel();
+			doCancel(req, resp);
 		} else{
-			ShowPage();
+			ShowPage(req, resp);
 		}
 	}
 
-	private void ShowPage() {
-		// TODO Auto-generated method stub
-		
+	private void ShowPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	}
 
-	private void doCancel() {
-		// TODO Auto-generated method stub
-		
+	private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/browse.jsp").forward(req, resp);
 	}
 
 	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = GetUser(req);
+		User user = null;
+		try {
+			user = GetUser(req);
+		} catch (ValidationException e1) {
+			req.setAttribute("error", e1.getMessage());
+			ShowPage(req, resp);
+			return;
+		}
 		try {
 			ProccesUser(user);
 		} catch (DatabaseException e) {
