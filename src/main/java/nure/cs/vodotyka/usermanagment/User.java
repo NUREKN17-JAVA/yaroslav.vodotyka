@@ -64,6 +64,15 @@ public class User implements Serializable {
 		return difference.getYears();
 	}
 	
+	//Web model methods
+	public int getAge(){
+		return GetAge();
+	}
+	
+	public String getFullName(){
+		return GetFullName();
+	}
+	
 	@Override
 	public boolean equals(Object obj){
 		if(obj == null){
