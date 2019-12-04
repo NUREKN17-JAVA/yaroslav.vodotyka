@@ -33,7 +33,7 @@ public class EditServletTest extends MockServletTestCase {
 		addRequestParameter("date", DateFormat.getDateInstance().format(date));
 		addRequestParameter("okButton");
 		doPost();
-		String errorMsg = (String)getWebMockObjectFactory().getMockSession().getAttribute("error");
+		String errorMsg = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
 		assertNotNull("Cant find a message in session scope", errorMsg);
 	}
 	
@@ -45,7 +45,7 @@ public class EditServletTest extends MockServletTestCase {
 		addRequestParameter("date", DateFormat.getDateInstance().format(date));
 		addRequestParameter("okButton");
 		doPost();
-		String errorMsg = (String)getWebMockObjectFactory().getMockSession().getAttribute("error");
+		String errorMsg = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
 		assertNotNull("Cant find a message in session scope", errorMsg);
 	}
 	
@@ -55,7 +55,7 @@ public class EditServletTest extends MockServletTestCase {
 		addRequestParameter("lastName", "Vodotyka");
 		addRequestParameter("okButton");
 		doPost();
-		String errorMsg = (String)getWebMockObjectFactory().getMockSession().getAttribute("error");
+		String errorMsg = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
 		assertNotNull("Cant find a message in session scope", errorMsg);
 	}
 	
@@ -68,7 +68,7 @@ public class EditServletTest extends MockServletTestCase {
 		addRequestParameter("date", "wrongFormatDate");
 		addRequestParameter("okButton");
 		doPost();
-		String errorMsg = (String)getWebMockObjectFactory().getMockSession().getAttribute("error");
+		String errorMsg = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
 		assertNotNull("Cant find a message in session scope", errorMsg);
 	}
 }
