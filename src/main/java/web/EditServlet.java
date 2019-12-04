@@ -28,7 +28,7 @@ public class EditServlet extends HttpServlet {
 		}
 	}
 
-	private void ShowPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void ShowPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	}
 
@@ -83,7 +83,7 @@ public class EditServlet extends HttpServlet {
 		return user;
 	}
 
-	private void ProccesUser(User user) throws DatabaseException {
+	protected void ProccesUser(User user) throws DatabaseException {
 		DaoFactory.GetInstance().GetUserDao().UpdateUser(user);
 	}
 
