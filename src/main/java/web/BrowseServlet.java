@@ -51,9 +51,20 @@ public class BrowseServlet extends HttpServlet {
 		}
 	}
 
-	private void Delete(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		
+	private void Delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String idStr = req.getParameter("id");
+		if(idStr == null || idStr.trim().length() == 0){
+			req.setAttribute("error", "You must select a user");
+		} else{
+			try {
+				DaoFactory.GetInstance().GetUserDao().DeleteUser(new Long(idStr));
+			}  catch (DatabaseException e) {
+				req.setAttribute("error", "Error" + e.toString());
+				req.getRequestDispatcher("/browse.jsp").forward(req,  resp);
+				return;
+			}
+			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+		}
 	}
 
 	private void Edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

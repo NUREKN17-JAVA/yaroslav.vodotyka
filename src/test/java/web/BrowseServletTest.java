@@ -45,4 +45,12 @@ public class BrowseServletTest extends MockServletTestCase {
 		assertNotNull("No user in session" ,userInsession);
 		assertSame(user, userInsession);
 	}
+	
+	public void testDelete(){
+		User user = new User(new Long(1) ,"Yaroslav", "Vodotyka", new Date());
+		getMockUserDao().expect("DeleteUser", user.getId().longValue());
+		addRequestParameter("deleteButton", "Delete");
+		addRequestParameter("id", "1");
+		doPost();
+	}
 }
