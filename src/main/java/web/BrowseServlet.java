@@ -34,9 +34,21 @@ public class BrowseServlet extends HttpServlet {
 		
 	}
 
-	private void Details(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		
+	private void Details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String idStr = req.getParameter("id");
+		if(idStr == null || idStr.trim().length() == 0){
+			req.setAttribute("error", "You must select a user");
+		} else{
+			try {
+				User user = DaoFactory.GetInstance().GetUserDao().GetUser(new Long(idStr));
+				req.getSession().setAttribute("user", user);
+			} catch (DatabaseException e) {
+				req.setAttribute("error", "Error" + e.toString());
+				req.getRequestDispatcher("/browse.jsp").forward(req,  resp);
+				return;
+			}
+			req.getRequestDispatcher("/details.jsp").forward(req,  resp);
+		}
 	}
 
 	private void Delete(HttpServletRequest req, HttpServletResponse resp) {
@@ -62,12 +74,12 @@ public class BrowseServlet extends HttpServlet {
 				req.getRequestDispatcher("/browse.jsp").forward(req,  resp);
 				return;
 			}
-			req.getRequestDispatcher("/edit").forward(req,  resp);
+			req.getRequestDispatcher("/edit.jsp").forward(req,  resp);
 		}
 	}
 
-	private void Add(HttpServletRequest req, HttpServletResponse resp) {
-		
+	private void Add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/add").forward(req, resp);
 	}
 
 	private void Browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException{

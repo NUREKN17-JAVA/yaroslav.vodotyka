@@ -34,4 +34,15 @@ public class BrowseServletTest extends MockServletTestCase {
 		assertNotNull("No user in session" ,userInsession);
 		assertSame(user, userInsession);
 	}
+	
+	public void testDetails(){
+		User user = new User(new Long(1) ,"Yaroslav", "Vodotyka", new Date());
+		getMockUserDao().expectAndReturn("GetUser", new Long(1).longValue(), user);
+		addRequestParameter("detailsButton", "Details");
+		addRequestParameter("id", "1");
+		doPost();
+		User userInsession = (User)getWebMockObjectFactory().getMockSession().getAttribute("user");
+		assertNotNull("No user in session" ,userInsession);
+		assertSame(user, userInsession);
+	}
 }
