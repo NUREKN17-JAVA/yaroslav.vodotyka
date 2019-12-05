@@ -6,6 +6,10 @@ import db.DaoFactory;
 import db.DatabaseException;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class SearchAgent extends Agent {
 
@@ -13,11 +17,30 @@ public class SearchAgent extends Agent {
 	protected void setup() {
 		super.setup();
 		System.out.println(getAID().getName() + " started");
+		
+		DFAgentDescription description = new DFAgentDescription();
+		description.setName(getAID());
+		ServiceDescription serviceDescr = new ServiceDescription();
+		serviceDescr.setName("JADE-searching");
+		serviceDescr.setType("searching");
+		description.addServices(serviceDescr);
+		try{
+			DFService.register(this, description);
+		}
+		catch(FIPAException e){
+			e.printStackTrace();
+		}
+		addBehaviour(new RequestServer());
 	}
 
 	@Override
 	protected void takeDown() {
 		System.out.println(getAID().getName() + " terminated");
+		try{
+			DFService.deregister(this);
+		} catch(FIPAException e){
+			e.printStackTrace();
+		}
 		super.takeDown();
 	}
 
