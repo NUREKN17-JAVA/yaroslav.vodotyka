@@ -121,7 +121,7 @@ public class SearchGui extends JFrame {
         }
 
         private void initialize() {
-            this.setName(&quot;addPanel&quot;); //$NON-NLS-1$
+            this.setName("AgentPanel"); //$NON-NLS-1$
             this.setLayout(new BorderLayout());
             this.add(getFieldPanel(), BorderLayout.NORTH);
 
@@ -139,9 +139,9 @@ public class SearchGui extends JFrame {
         private JButton getCancelButton() {
             if (cancelButton == null) {
                 cancelButton = new JButton();
-                cancelButton.setText(Messages.getString(&quot;AddPanel.cancel&quot;)); //$NON-NLS-1$
-                cancelButton.setName(&quot;cancelButton&quot;); //$NON-NLS-1$
-                cancelButton.setActionCommand(&quot;cancel&quot;); //$NON-NLS-1$
+                cancelButton.setText("Cancel"); //$NON-NLS-1$
+                cancelButton.setName("cancelButton"); //$NON-NLS-1$
+                cancelButton.setActionCommand("cancel"); //$NON-NLS-1$
                 cancelButton.addActionListener(this);
             }
             return cancelButton;
@@ -150,9 +150,9 @@ public class SearchGui extends JFrame {
         private JButton getSearchButton() {
             if (searchButton == null) {
                 searchButton = new JButton();
-                searchButton.setText(&quot;Search&quot;); //$NON-NLS-1$
-                searchButton.setName(&quot;okButton&quot;); //$NON-NLS-1$
-                searchButton.setActionCommand(&quot;ok&quot;); //$NON-NLS-1$
+                searchButton.setText("Search"); //$NON-NLS-1$
+                searchButton.setName("searchButton"); //$NON-NLS-1$
+                searchButton.setActionCommand("seacrch"); //$NON-NLS-1$
                 searchButton.addActionListener(this);
             }
             return searchButton;
@@ -162,9 +162,9 @@ public class SearchGui extends JFrame {
             if (fieldPanel == null) {
                 fieldPanel = new JPanel();
                 fieldPanel.setLayout(new GridLayout(2, 3));
-                addLabeledField(fieldPanel, &quot;FirstName&quot;, getFirstNameField()); //$NON-NLS-1$
+                addLabeledField(fieldPanel, "First name", getFirstNameField()); //$NON-NLS-1$
                 fieldPanel.add(getSearchButton());
-                addLabeledField(fieldPanel, &quot;LastName&quot;, getLastNameField()); //$NON-NLS-1$
+                addLabeledField(fieldPanel, "LastName", getLastNameField()); //$NON-NLS-1$
                 fieldPanel.add(getCancelButton());
             }
             return fieldPanel;
@@ -173,7 +173,7 @@ public class SearchGui extends JFrame {
         protected JTextField getLastNameField() {
             if (lastNameField == null) {
                 lastNameField = new JTextField();
-                lastNameField.setName(&quot;lastNameField&quot;); //$NON-NLS-1$
+                lastNameField.setName("lastNameField"); //$NON-NLS-1$
             }
             return lastNameField;
         }
@@ -189,18 +189,18 @@ public class SearchGui extends JFrame {
         protected JTextField getFirstNameField() {
             if (firstNameField == null) {
                 firstNameField = new JTextField();
-                firstNameField.setName(&quot;firstNameField&quot;); //$NON-NLS-1$
+                firstNameField.setName("firstNameField"); //$NON-NLS-1$
             }
             return firstNameField;
         }
 
         protected void doAction(ActionEvent e) throws ParseException {
-            if (&quot;ok&quot;.equalsIgnoreCase(e.getActionCommand())) {
+            if ("seacrch".equalsIgnoreCase(e.getActionCommand())) {
                 String firstName = getFirstNameField().getText();
                 String lastName = getLastNameField().getText();
                 try {
                     clearUsers();
-                    agent.search(firstName, lastName);
+                    agent.Search(firstName, lastName);
                 } catch (SearchException e1) {
                     throw new RuntimeException(e1);
                 }
@@ -217,8 +217,8 @@ public class SearchGui extends JFrame {
         }
 
         private void clearFields() {
-            getFirstNameField().setText(&quot;&quot;);
-            getLastNameField().setText(&quot;&quot;);
+            getFirstNameField().setText("");
+            getLastNameField().setText("");
         }
     }
 
@@ -226,16 +226,16 @@ public class SearchGui extends JFrame {
      * @param users
      */
     public void addUsers(Collection users) {
-        System.out.println(&quot;addUsers : &quot; + users);
+        System.out.println("addUsers : " + users);
         UserTableModel model = (UserTableModel) getTable().getModel();
-        model.addUsers(users);
+        model.AddUsers(users);
         this.repaint();
     }
 
     private void clearUsers() {
-        System.out.println(&quot;clearUsers : &quot;);
+        System.out.println("clearUsers : ");
         UserTableModel model = (UserTableModel) getTable().getModel();
-        model.clearUsers();
+        model.ClearUsers();
         this.repaint();
     }
 }
