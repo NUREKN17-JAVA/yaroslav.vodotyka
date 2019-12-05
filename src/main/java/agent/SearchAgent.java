@@ -15,10 +15,14 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class SearchAgent extends Agent {
 
 	private AID[] aids;
+	private SearchGui gui = null;
 	@Override
 	protected void setup() {
 		super.setup();
 		System.out.println(getAID().getName() + " started");
+		
+		gui = new SearchGui(this);
+		gui.setVisible(true);
 		
 		DFAgentDescription description = new DFAgentDescription();
 		description.setName(getAID());
@@ -66,6 +70,8 @@ public class SearchAgent extends Agent {
 		} catch(FIPAException e){
 			e.printStackTrace();
 		}
+		gui.setVisible(false);
+		gui.dispose();
 		super.takeDown();
 	}
 
@@ -84,6 +90,6 @@ public class SearchAgent extends Agent {
 	}
 	
 	public void ShowUsers(Collection users){
-		
+		gui.addUsers(users);
 	}
 }
