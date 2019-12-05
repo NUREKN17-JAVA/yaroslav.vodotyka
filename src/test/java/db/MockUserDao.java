@@ -49,4 +49,10 @@ public class MockUserDao implements UserDao {
 
 	}
 
+	@Override
+	public Collection FindUser(String firstName, String lastName)
+			throws DatabaseException {
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -15,6 +15,7 @@ import java.sql.CallableStatement;
 
 public class HsqlDbUserDao implements UserDao {
 
+	private static final String SELECT_BY_NAME = "SELECT * FROM users AS u WHERE u.firstname=? AND u.lastname=?";
 	private static final String SELECT_ONE_QUERY = "SELECT * FROM users AS u WHERE u.id = ?";
 	private static final String DELETE_QUERY = "DELETE FROM users AS u WHERE u.id=?";
 	private static final String UPDATE_QUERY = "UPDATE users AS u SET firstname=?, lastname=?, dateofbirth=? WHERE u.id=?";
@@ -151,6 +152,29 @@ public class HsqlDbUserDao implements UserDao {
 	public void SetConnectionFactory(ConnectionFactory connectionFactory) {
 		this.connectionFactory = connectionFactory;
 		
+	}
+
+	public Collection FindUser(String firstName, String lastName) throws DatabaseException {
+		Collection result = new LinkedList();
+		
+		try {
+			Connection connection = connectionFactory.CreateConnection();
+			PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
+			statement.setString(1, firstName);
+			statement.setString(2, lastName);
+			ResultSet resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				User user = new User();
+				user.setId(new Long(resultSet.getLong(1)));
+				user.setFirstName(resultSet.getString(2));
+				user.setLastName(resultSet.getString(3));
+				user.setDateOfBirth(resultSet.getDate(4));
+				result.add(user);
+			}
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
+		return result;
 	}
 
 }
