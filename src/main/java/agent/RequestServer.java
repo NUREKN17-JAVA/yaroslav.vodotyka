@@ -3,6 +3,7 @@ package agent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import nure.cs.vodotyka.usermanagment.User;
@@ -31,8 +32,21 @@ public class RequestServer extends CyclicBehaviour {
 	}
 
 	private Collection ParseMessage(ACLMessage message) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection users = new LinkedList();
+		
+		String content = message.getContent();
+		if(content != null){
+			StringTokenizer tokenizer = new StringTokenizer(content, ";");
+			while(tokenizer.hasMoreTokens()){
+				String userInfo = tokenizer.nextToken();
+				StringTokenizer innerTokenizer = new StringTokenizer(userInfo, ",");
+				String id = innerTokenizer.nextToken();
+				String firstName = innerTokenizer.nextToken();
+				String lastName = innerTokenizer.nextToken();
+				users.add(new User(new Long(id), firstName, lastName, null));
+			}
+		}
+		return users;
 	}
 
 	private ACLMessage CreateReply(ACLMessage message) {
